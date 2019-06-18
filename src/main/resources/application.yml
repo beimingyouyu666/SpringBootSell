@@ -1,0 +1,9 @@
+
+
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+##  path: e://learncodes --生成默认名为spring.log的日志文件
+#  file: e://learncodes/sell-log/sell.log
+#  level:
+#    com.imooc.LoggerTest: debug
