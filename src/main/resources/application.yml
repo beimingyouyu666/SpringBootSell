@@ -1,9 +1,10 @@
 
-
+#æŒ‡å®šæ—¥å¿—ï¼Œå¦‚æœæ–‡ä»¶åä¸ºlogback-spring.xmlå°±ä¸ç”¨æŒ‡å®š
 #logging:
+#  config: classpath:logback-spring.xml
 #  pattern:
 #    console: "%d - %msg%n"
-##  path: e://learncodes --Éú³ÉÄ¬ÈÏÃûÎªspring.logµÄÈÕÖ¾ÎÄ¼ş
+##  path: e://learncodes --ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½Îªspring.logï¿½ï¿½ï¿½ï¿½Ö¾ï¿½Ä¼ï¿½
 #  file: e://learncodes/sell-log/sell.log
 #  level:
 #    com.imooc.LoggerTest: debug

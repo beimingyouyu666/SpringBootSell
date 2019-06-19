@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Data
@@ -15,8 +18,11 @@ public class SellApplicationTests {
 
     @Test
     public void contextLoads() {
-        log.info("log info");
-        log.error("log error");
+        for (int i=0;i<100;i++){
+            log.info("log info------------------------------------------------------");
+            log.error("log error---------------------------------------------------------");
+        }
+
     }
 
 }
