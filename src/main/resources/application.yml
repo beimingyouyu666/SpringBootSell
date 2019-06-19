@@ -1,10 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    name: root
+    password: root
+    url: jdbc:mysql://localhost:3306/test
+
+
 
 #指定日志，如果文件名为logback-spring.xml就不用指定
 #logging:
 #  config: classpath:logback-spring.xml
 #  pattern:
 #    console: "%d - %msg%n"
-##  path: e://learncodes --����Ĭ����Ϊspring.log����־�ļ�
+##  path: e://learncodes --会生成默认的日志名spring.log
 #  file: e://learncodes/sell-log/sell.log
 #  level:
 #    com.imooc.LoggerTest: debug
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
