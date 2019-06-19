@@ -16,6 +16,15 @@
             <onMatch>DENY</onMatch>
             <onMismatch>ACCEPT</onMismatch>
         </filter>
+<!--        将之前的日志压缩-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>e://learncodes/sell-log/info/sell_info.%d.%i.log.zip</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>e://learncodes/sell-log/info/sell_info.%d.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>

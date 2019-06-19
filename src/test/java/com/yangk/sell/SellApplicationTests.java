@@ -18,7 +18,7 @@ public class SellApplicationTests {
 
     @Test
     public void contextLoads() {
-        for (int i=0;i<100;i++){
+        for (int i=0;i<10000;i++){
             log.info("log info------------------------------------------------------");
             log.error("log error---------------------------------------------------------");
         }
