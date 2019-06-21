@@ -1,7 +1,7 @@
 package com.yangk.sell;
 
+import com.yangk.sell.mapper.CountryMapper;
 import com.yangk.sell.model.Country;
-import com.yangk.sell.service.ICountryService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -17,12 +17,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Data
 @Slf4j
 @ComponentScan(basePackages = {"com.yangk"})
-@MapperScan("com.yangk.mapper")
+@MapperScan("com.yangk.sell.mapper")
 public class SellApplicationTests {
 
     @Autowired
-//    private CountryMapper countryMapper;
-    private ICountryService iCountryService;
+    private CountryMapper countryMapper;
+//    private ICountryService iCountryService;
 
     @Test
     public void contextLoads() {
@@ -34,8 +34,8 @@ public class SellApplicationTests {
 
     @Test
     public void testDao(){
-        Country country = iCountryService.queryCountryByCode("101");
-//        Country country = countryMapper.queryCountryByCode("101");
+//        Country country = iCountryService.queryCountryByCode("101");
+        Country country = countryMapper.queryCountryByCode("101");
         System.out.println(111);
     }
 

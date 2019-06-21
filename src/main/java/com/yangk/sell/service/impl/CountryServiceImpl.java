@@ -3,6 +3,7 @@ package com.yangk.sell.service.impl;
 import com.yangk.sell.mapper.CountryMapper;
 import com.yangk.sell.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @Description TODO
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Date 2019/6/19
  * @Version 1.0
  */
+@Service
 public class CountryServiceImpl {
 
     @Autowired
