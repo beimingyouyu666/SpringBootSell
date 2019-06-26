@@ -25,8 +25,8 @@ public class UserMapperTest {
     @Test
     public void save() {
         User user = new User();
-        user.setUsername("zzzz");
-        user.setPassword("bbbb");
+        user.setUsername("tttt");
+        user.setPassword("bbttttbb");
         user.setSex(1);
         user.setAge(18);
         // 返回插入的记录数 ，期望是1条 如果实际不是一条则抛出异常

@@ -49,6 +49,7 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${org.mybatis.spring.version}</version>
         </dependency>
+
         <!--<dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
