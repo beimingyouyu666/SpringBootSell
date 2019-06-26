@@ -1,0 +1,7 @@
+-- 记录
+一、springboot整合mybatis，并且配置slf4j和logbak作为日志记录
+
+二、Springboot整合mybatis后再使用 tk mapper
+1、先引入tk mapper依赖
+2、将 org.mybatis.spring.annotation.MapperScan(basePackages = "包路径")修改为
+    使用 tk.mybatis.spring.annotation.MapperScan(basePackages = "包路径")

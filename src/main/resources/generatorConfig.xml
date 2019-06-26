@@ -1,0 +1,70 @@
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--
+    id:必选，上下文id，用于在生成错误时提示
+    defaultModelType:指定生成对象的样式
+        1，conditional：类似hierarchical；
+        2，flat：所有内容（主键，blob）等全部生成在一个对象中；
+        3，hierarchical：主键生成一个XXKey对象(key class)，Blob等单独生成一个对象，其他简单属性在一个对象中(record class)
+    targetRuntime:
+        1，MyBatis3：默认的值，生成基于MyBatis3.x以上版本的内容，包括XXXBySample；
+        2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
+    introspectedColumnImpl：类全限定名，用于扩展MBG-->
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="useMapperCommentGenerator" value="true"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+
+            <!--设定mapper接口继承的接口  可以自定义接口-->
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <!--caseSensitive 是否区分大小写，默认值 false。如果数据库区分大小写，这里就需要配置为 true，
+                这样当表名为 USER 时，会生成 @Table(name = "USER") 注解，否则使用小写 user 时会找不到表。-->
+            <property name="caseSensitive" value="true"/>
+            <!--forceAnnotation 是否强制生成注解，默认 false，如果设置为 true，不管数据库名和字段名是否一致，都会生成注解（包含 @Table 和 @Column）。-->
+            <property name="forceAnnotation" value="true"/>
+            <!--generateColumnConsts 在生成的 model中，增加字段名的常量，便于使用 Example 拼接查询条件的时候使用。-->
+            <property name="generateColumnConsts" value="true"/>
+
+            <property name="generateDefaultInstanceMethod" value="true"/>
+            <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+            <property name="beginningDelimiter" value="`"/>
+            <property name="endingDelimiter" value="`"/>
+
+            <!--使用Data注解时，Getter,Setter,ToString,EqualsAndHashCode注解无效-->
+            <property name="lombok" value="Data"/>
+            <!--<property name="lombok" value="Data,Accessors"/>-->
+            <!--<property name="lombok" value="Getter,Setter,ToString,Accessors,EqualsAndHashCode"/>
+            <property name="lombokEqualsAndHashCodeCallSuper" value="true"/>-->
+
+            <!--美化？-->
+            <!--<property name="swagger" value="true"/>-->
+        </plugin>
+
+        <!--数据库的配置-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/test"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <!--model的目录-->
+        <javaModelGenerator targetPackage="com.yangk.sell.model" targetProject="src/main/java"/>
+        <!--mapper.xml生成的目录-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+        <!--mapper接口生成的目录-->
+        <javaClientGenerator targetPackage="com.yangk.sell.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
+
+        <table tableName="user">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="student">
+            <generatedKey column="stu_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>
