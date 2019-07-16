@@ -1,12 +1,12 @@
 package com.yangk.sell;
 
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
-@MapperScan("com.yangk.sell.mapper")
+@MapperScan(basePackages = "com.yangk.sell.mapper")
 @Slf4j
 public class SellApplication {
 

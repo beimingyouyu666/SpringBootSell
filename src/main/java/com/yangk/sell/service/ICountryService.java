@@ -11,4 +11,6 @@ import com.yangk.sell.model.Country;
 public interface ICountryService {
 
     Country queryCountryByCode(String code);
+
+    Country queryCountryByCondition(String countryId);
 }

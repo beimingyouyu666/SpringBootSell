@@ -2,13 +2,10 @@ package com.yangk.sell.service.impl;
 
 import com.yangk.sell.mapper.CountryMapper;
 import com.yangk.sell.model.Country;
+import com.yangk.sell.service.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * @Description TODO
@@ -17,22 +14,21 @@ import java.util.stream.Collectors;
  * @Version 1.0
  */
 @Service
-public class CountryServiceImpl {
+public class CountryServiceImpl implements ICountryService {
 
     @Autowired
     private CountryMapper countryMapper;
 
-    public Country queryCountryByCode(){
+    @Override
+    public Country queryCountryByCode(String code) {
         return countryMapper.queryCountryByCode("101");
     }
 
-    public static void main(String[] args) {
-        List<Integer> list = Arrays.asList(1,2,3,4);
-        Function<Integer,Integer> function = i-> {if (i==2){i=8;}
-            return i;
-        };
-        List<Integer> collect = list.stream().map(function).collect(Collectors.toList());
-//        List<Integer> collect = list.stream().map(i -> i == 2 ? 8 : i).collect(Collectors.toList());
-        collect.forEach(System.out::println);
+    @Override
+    public Country queryCountryByCondition(String countryId) {
+        Example example = new Example(Country.class);
+        example.createCriteria().andEqualTo("id",countryId);
+        Country country = countryMapper.selectOneByExample(example);
+        return country;
     }
 }
