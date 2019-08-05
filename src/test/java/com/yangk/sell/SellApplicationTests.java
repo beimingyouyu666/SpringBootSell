@@ -36,11 +36,20 @@ public class SellApplicationTests {
     private StudentMapper studentMapper;
 
 
+    /**
+     *  测试日志
+     */
     @Test
     public void testDao(){
         Country country = iCountryService.queryCountryByCode("101");
 //        Country country = countryMapper.queryCountryByCode("101");
         System.out.println(country);
+    }
+
+    @Test
+    public void testLog(){
+        log.info("error",new NullPointerException());
+        throw new NullPointerException();
     }
 
     @Test

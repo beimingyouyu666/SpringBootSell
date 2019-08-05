@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 
+    <property name="LOG_BASE" value="e://learncodes/sell-log"/>    <!-- 日志存储的路径 -->
+    <property name="LOG_APP_NAME" value="GDS-WMS"/>
+
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) --- [%15.15(%thread)] %cyan(%-40.40(%logger{40})) : %msg%n</pattern>
@@ -8,8 +11,9 @@
         </encoder>
     </appender>
 
+    <!--info级别的日志-->
     <appender name="info_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>e://learncodes/sell-log/info/sell_info.log</File>
+        <File>${LOG_BASE}/info/sell_info.log</File>
         <append>true</append>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
@@ -26,7 +30,7 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>e://learncodes/sell-log/info/sell_info.%d.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_BASE}/info/sell_info.%d.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <totalSizeCap>20GB</totalSizeCap>
             <maxFileSize>100KB</maxFileSize>
@@ -37,14 +41,15 @@
         </encoder>
     </appender>
 
+    <!--错误日志-->
     <appender name="error_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>e://learncodes/sell-log/error/sell_error.log</File>
+        <File>${LOG_BASE}/error/sell_error.log</File>
         <append>true</append>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>e://learncodes/sell-log/error/sell_error.%d.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_BASE}/error/sell_error.%d.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <totalSizeCap>20GB</totalSizeCap>
             <maxFileSize>100KB</maxFileSize>
@@ -55,10 +60,98 @@
         </encoder>
     </appender>
 
+    <!--监控接口调用日志-->
+    <appender name="access_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_BASE}/info/sell_assess.log</File>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BASE}/info/sell_access.%d.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
+            <maxFileSize>100KB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%15.15(%thread)] %-40.40(%logger{40}) : %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="all_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_BASE}/sell_all.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BASE}/sell_all.%d.log</fileNamePattern>
+            <!--日志保存天数-->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <!--<pattern>%d [${LOG_APP_NAME}] [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%15.15(%thread)] %-40.40(%logger{40}) : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
     <root level="INFO">
+        <appender-ref ref="all_log"/>
         <appender-ref ref="stdout"/>
         <appender-ref ref="info_log"/>
         <appender-ref ref="error_log"/>
     </root>
+
+    <!--将接口调用日志打印到指定文件
+    1、定义access_log
+    2、配置此logger
+    3、在代码中获取此日志类，记录日志
+    private static Logger logger = LoggerFactory.getLogger("AccessLog");-->
+    <logger name="AccessLog">
+        <appender-ref ref="access_log"/>
+    </logger>
+
+    <!--按照环境使用不同配置-->
+    <!--<springProfile name="dev,test,uat,prod,AU,JP,US">
+        <root level="ERROR">
+            <appender-ref ref="FILE" />
+            &lt;!&ndash;错误日志&ndash;&gt;
+            <appender-ref ref="ERROR_LOG"/>
+            &lt;!&ndash;业务日志&ndash;&gt;
+            <appender-ref ref="BIZ_ROLLING_FILE"/>
+        </root>
+
+        &lt;!&ndash;日志输出设置 &ndash;&gt;
+        &lt;!&ndash;业务日志 &ndash;&gt;
+        <logger name="com.fpx" level="INFO"/>
+        &lt;!&ndash;错误日志 &ndash;&gt;
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="org.mongodb" level="ERROR"/>
+        <logger name="org.apache" level="ERROR"/>
+        <logger name="com.alibaba" level="ERROR"/>
+        <logger name="c.f.f.s" level="ERROR"/>
+        <logger name="o.h" level="ERROR"/>
+    </springProfile>
+
+    <springProfile name="local">
+        <root level="DEBUG">
+            &lt;!&ndash;错误日志&ndash;&gt;
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="BIZ_ROLLING_FILE"/>
+        </root>
+        &lt;!&ndash;日志输出设置 &ndash;&gt;
+        &lt;!&ndash;业务日志 &ndash;&gt;
+        <logger name="com.fpx" level="DEBUG"/>
+        &lt;!&ndash;错误日志 &ndash;&gt;
+        <logger name="com.fpx.gds.wms.mapper" level="DEBUG"/>
+        <logger name="org.mybatis" level="DEBUG"/>
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="org.mongodb" level="ERROR"/>
+        <logger name="org.apache" level="ERROR"/>
+        <logger name="com.alibaba" level="ERROR"/>
+        <logger name="c.f.f.s" level="ERROR"/>
+        <logger name="o.h" level="ERROR"/>
+    </springProfile>-->
 
 </configuration>
